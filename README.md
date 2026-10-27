@@ -1,69 +1,31 @@
-# Snake Remake — TIC-80
+# Snake Remake — TIC-80 (in progress)
 
-A reimagining of the classic Snake arcade game, built in Lua for the TIC-80 fantasy console.
+A remake of the classic *Snake* arcade game for the [TIC-80](https://tic80.com) fantasy console, written in Lua for CS 86: Game Systems at Swarthmore College.
 
-## Overview
+> **Status: in progress.** Gameplay — growing body, food spawning, wall and self-collision, scoring — is being built now.
 
-Rather than recreate the original feature for feature, this project distills Snake to its essential mechanics and rebuilds them within TIC-80's constraints. Throughout development, we examined which elements of the original translate naturally to TIC-80's built-in affordances (its fixed resolution, limited palette, sprite and map editors) and where we chose to work against those constraints to preserve the feel of the original.
+## Planned gameplay
 
-## Goals
+- Snake moves continuously on a grid; arrow keys change direction
+- Eating food grows the snake and increases the score
+- Hitting a wall or the snake's own body ends the game
+- Speed increases as the snake grows
 
-- **Distill the essence:** identify the core mechanics and design choices that make Snake compelling, and preserve them in the remake.
-- **Build a working reimagining:** implement a complete, playable game in Lua on TIC-80.
-- **Reflect critically:** document design decisions, trade-offs, and lessons learned in an accompanying write-up.
-
-## Repository Structure
-
-```
-├── game.lua          # Game source code
-├── remake/           # HTML export, playable in the browser
-└── writeup/
-    └── README.md     # Design write-up (~1,000 words)
-```
-
-## Running the Game
-
-**In the browser:** open the HTML export via this repository's GitHub Pages site.
-
-**In TIC-80:**
+## Running it
 
 ```
 cd game
 tic80 --fs .
 load game.lua
+run
 ```
 
-## Building the HTML Export
-
-```
-cd game
-tic80 --fs .
-load game.lua
-export html remake.zip
-unzip remake.zip
-chmod a+r cart.tic
-```
-
-If the project uses `middleclass` or `std.strict`, bundle the dependencies into a single file before exporting. Install the tooling once:
+If the game uses `middleclass` or `std.strict`, bundle it first:
 
 ```
 luarocks install --local std.strict
 luarocks install --local amalg
-```
-
-Then rebuild after each change:
-
-```
 ~/.luarocks/bin/amalg.lua -o exported_game.lua middleclass std.strict -s game.lua
-tic80 --fs .
-load exported_game.lua
-export html remake.zip
-unzip remake.zip
-chmod a+r cart.tic
 ```
 
-> **Note:** If changes don't appear on GitHub Pages after a refresh, clear your browser cache or open the page in a private window.
-
-## Write-Up
-
-A full discussion of our design process, the original game's defining qualities, and how TIC-80 shaped our approach is available in [`writeup/README.md`](writeup/README.md).
+Then `load exported_game.lua` in TIC-80 and `export html remake.zip` to build a browser version.
